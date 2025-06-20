@@ -1,0 +1,95 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+
+export default function AdminProductPage() {
+  const [allProducts, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(import.meta.env.VITE_BACKEND_URL + "/api/products")
+      .then((response) => {
+        setProducts(response.data);
+        setError(null);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch products:", error);
+        setError("Failed to load products. Please try again later.");
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="w-full h-full bg-gray-300 max-h-full overflow-y-scroll ">
+      <Link
+        to="/add-product"
+        className="fixed bottom-4 right-4 bg-green-700 text-white font-bold px-4 py-2 rounded-md shadow-md hover:bg-blue-800 transition-colors"
+      >
+        + Add Products
+      </Link>
+      {loading ? (
+        <p className="text-center text-blue-600">Loading...</p>
+      ) : error ? (
+        <p className="text-center text-red-600">{error}</p>
+      ) : (
+        <table className="w-full text-center border border-gray-400 text-sm">
+          <thead>
+            <tr className="bg-amber-200">
+              <th className="border border-gray-400">S.No</th>
+              <th className="border border-gray-400">Product ID</th>
+              <th className="border border-gray-400">Name</th>
+              <th className="border border-gray-400">Price</th>
+              <th className="border border-gray-400">Labelled Price</th>
+              <th className="border border-gray-400">Stock</th>
+              <th className="border border-gray-400">Image</th>
+              <th className="border border-gray-400">Available</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allProducts.length === 0 ? (
+              <tr>
+                <td colSpan="11" className="text-gray-500 py-4">
+                  No products found.
+                </td>
+              </tr>
+            ) : (
+              allProducts.map((product, index) => (
+                <tr
+                  key={product.productId}
+                  className="bg-white hover:bg-gray-100"
+                >
+                  <td className="border border-gray-300">{index + 1}</td>
+                  <td className="border border-gray-300">
+                    {product.productId}
+                  </td>
+                  <td className="border border-gray-300">{product.name}</td>
+                  <td className="border border-gray-300">
+                    Rs. {product.price}
+                  </td>
+                  <td className="border border-gray-300">
+                    Rs. {product.labelledPrice}
+                  </td>
+                  <td className="border border-gray-300">{product.stock}</td>
+
+                  <td className="border border-gray-300">
+                    <img
+                      src={product.images[0] }
+                      alt="Product"
+                      className="w-[50px] h-[50px] object-cover rounded-md mx-auto"
+                    />
+                  </td>
+                  <td className="border border-gray-300">
+                    {product.isAvailable ? "Yes" : "No"}
+                  </td>
+                  
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
