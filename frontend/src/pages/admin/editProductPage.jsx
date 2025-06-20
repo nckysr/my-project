@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/mediaUploadPage";
 import axios from "axios";
 
-export default function AddProductPage() {
+export default function UpdateProductPage() {
   const [productId, setProductId] = useState("");
   const [name, setName] = useState("");
   const [altNames, setAltNames] = useState("");
@@ -16,7 +16,7 @@ export default function AddProductPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  async function AddProduct() {
+  async function UpdateProduct() {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -58,7 +58,7 @@ export default function AddProductPage() {
         }
       );
 
-      toast.success("Product added successfully");
+      toast.success("Product edited successfully");
       navigate("/admin/products");
     } catch (err) {
       console.error(err);
@@ -73,7 +73,7 @@ export default function AddProductPage() {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-4 p-6">
       <h2 className="text-2xl font-bold text-gray-800 text-center underline">
-        Add New Product
+        Update Product
       </h2>
       <input
         type="text"
@@ -144,10 +144,10 @@ export default function AddProductPage() {
         </Link>
         <button
           className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg disabled:opacity-60"
-          onClick={AddProduct}
+          onClick={UpdateProduct}
           disabled={loading}
         >
-          {loading ? "Adding..." : "Add Product"}
+          {loading ? "Editing..." : "Edit Product"}
         </button>
       </div>
     </div>

@@ -10,6 +10,7 @@ import AdminPage from "./pages/admin/adminPage";
 import TestPage from "./pages/testPage";
 import { Toaster } from "react-hot-toast";
 import AddProductForm from "./pages/admin/addProductPage";
+import AddProductPage from "./pages/admin/addProductPage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -18,36 +19,22 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-center" />
         <div>
-          <h3>
-            <button className="bg-blue-500 p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/">Home</Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/login">Login</Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/signup">Sign Up</Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/admin">Admin</Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/testing">Testing </Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/add-product">Product </Link>
-            </button>
-            <button className="bg-blue p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-              <Link to="/media">media </Link>
-            </button>
-          </h3>
+          <div className="bg-blue-500  p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
+            <Link to="/">Home  </Link>
+            <Link to="/login">Login  </Link>
+            <Link to="/signup">Sign Up  </Link>
+            <Link to="/admin">Admin  </Link>
+            <Link to="/testing">Testing   </Link>
+            <Link to="/add-product">Product   </Link>
+            <Link to="/media">media  </Link>
+          </div>
           <Routes path="/*">
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SingUpPage />} />
             <Route path="/admin/*" element={<AdminPage />} />
             <Route path="/testing" element={<TestPage />} />
-            <Route path="/add-product" element={<AddProductForm />} />
+            <Route path="/add-product" element={<AddProductPage />} />
             <Route path="/*" element={<h1>404 Not Found</h1>} />
           </Routes>
         </div>

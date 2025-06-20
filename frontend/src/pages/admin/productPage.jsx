@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function AdminProductPage() {
   const [allProducts, setProducts] = useState([]);
@@ -24,7 +25,7 @@ export default function AdminProductPage() {
   return (
     <div className="w-full h-full bg-gray-300 max-h-full overflow-y-scroll ">
       <Link
-        to="/add-product"
+        to="/admin/add-products"
         className="fixed bottom-4 right-4 bg-green-700 text-white font-bold px-4 py-2 rounded-md shadow-md hover:bg-blue-800 transition-colors"
       >
         + Add Products
@@ -45,6 +46,7 @@ export default function AdminProductPage() {
               <th className="border border-gray-400">Stock</th>
               <th className="border border-gray-400">Image</th>
               <th className="border border-gray-400">Available</th>
+              <th className="border border-gray-400">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -75,7 +77,7 @@ export default function AdminProductPage() {
 
                   <td className="border border-gray-300">
                     <img
-                      src={product.images[0] }
+                      src={product.images[0]}
                       alt="Product"
                       className="w-[50px] h-[50px] object-cover rounded-md mx-auto"
                     />
@@ -83,7 +85,12 @@ export default function AdminProductPage() {
                   <td className="border border-gray-300">
                     {product.isAvailable ? "Yes" : "No"}
                   </td>
-                  
+                  <td className="border border-gray-300">
+                    <div className="flex justify-center items-center w-full gap-2">
+                      <FaTrash className="text-red-600 text-[20px] mx-2 cursor-pointer"/>
+                      <FaEdit className="text-blue-600 text-[20px] mx-2 cursor-pointer" />
+                    </div>
+                  </td>
                 </tr>
               ))
             )}
