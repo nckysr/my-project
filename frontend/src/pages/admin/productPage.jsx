@@ -3,25 +3,50 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-export default function AdminProductPage() {
+export default function ProductPage() {
   const [allProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (loading == true) {
+      axios
+        .get(import.meta.env.VITE_BACKEND_URL + "/api/products")
+        .then((response) => {
+          setProducts(response.data);
+          setError(null);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch products:", error);
+          setError("Failed to load products. Please try again later.");
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [loading]);
+
+  function deleteProduct(productId) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login first");
+      return;
+    }
     axios
-      .get(import.meta.env.VITE_BACKEND_URL + "/api/products")
-      .then((response) => {
-        setProducts(response.data);
-        setError(null);
+      .delete(import.meta.env.VITE_BACKEND_URL + `/api/products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+      .then(() => {
+        toast.success(response.data.message);
+
+        setLoading(true);
       })
       .catch((error) => {
-        console.error("Failed to fetch products:", error);
-        setError("Failed to load products. Please try again later.");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+        console.error(response.data.message);
+      });
+  }
 
   return (
     <div className="w-full h-full bg-gray-300 max-h-full overflow-y-scroll ">
@@ -88,7 +113,10 @@ export default function AdminProductPage() {
                   </td>
                   <td className="border border-gray-300">
                     <div className="flex justify-center items-center w-full gap-2">
-                      <FaTrash className="text-red-600 text-[20px] mx-2 cursor-pointer" />
+                      <FaTrash
+                        onClick={() => deleteProduct(product.productId)}
+                        className="text-red-600 text-[20px] mx-2 cursor-pointer"
+                      />
                       <FaEdit
                         onClick={() =>
                           navigate(`/admin/edit-products/`, {
