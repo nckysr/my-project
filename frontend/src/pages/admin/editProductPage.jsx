@@ -1,18 +1,20 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import mediaUpload from "../../utils/mediaUploadPage";
 import axios from "axios";
 
-export default function UpdateProductPage() {
-  const [productId, setProductId] = useState("");
-  const [name, setName] = useState("");
-  const [altNames, setAltNames] = useState("");
-  const [description, setDescription] = useState("");
+export default function EditProductPage() {
+  const location = useLocation();
+  console.log(location);
+  const [productId, setProductId] = useState(location.state.productId);
+  const [name, setName] = useState(location.state.name);
+  const [altNames, setAltNames] = useState(location.state.altNames.join(","));
+  const [description, setDescription] = useState(location.state.description);
   const [images, setImages] = useState([]);
-  const [labelledPrice, setLabelledPrice] = useState();
-  const [price, setPrice] = useState();
-  const [stock, setStock] = useState();
+  const [labelledPrice, setLabelledPrice] = useState(location.state.labelledPrice );
+  const [price, setPrice] = useState(location.state.price );
+  const [stock, setStock] = useState(location.state.stock);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,16 +26,19 @@ export default function UpdateProductPage() {
       return;
     }
 
-    if (images.length <= 0) {
-      toast.error("Please select at least one image");
-      return;
-    }
+    
 
     try {
       setLoading(true);
 
-      const uploadPromises = Array.from(images).map((img) => mediaUpload(img));
-      const imageUrls = await Promise.all(uploadPromises);
+      let imageUrls = [];
+       if (images.length > 0) {
+        const uploadPromises = Array.from(images).map((img) => mediaUpload(img));
+        imageUrls = await Promise.all(uploadPromises);
+      }else{
+        imageUrls = location.state.images
+      }
+     
 
       const altNamesArray = altNames.split(",").map((name) => name.trim());
 
@@ -48,8 +53,8 @@ export default function UpdateProductPage() {
         stock: Number(stock),
       };
 
-      await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/products`,
+     await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/`+ productId,
         product,
         {
           headers: {
@@ -58,7 +63,7 @@ export default function UpdateProductPage() {
         }
       );
 
-      toast.success("Product edited successfully");
+      toast.success("Product updated successfully");
       navigate("/admin/products");
     } catch (err) {
       console.error(err);
@@ -77,6 +82,7 @@ export default function UpdateProductPage() {
       </h2>
       <input
         type="text"
+        disabled
         name="productId"
         placeholder="Product ID"
         value={productId}
@@ -98,7 +104,7 @@ export default function UpdateProductPage() {
         value={altNames}
         onChange={(e) => setAltNames(e.target.value)}
       />
-     
+
       <input
         type="file"
         accept="image/*"
@@ -127,7 +133,7 @@ export default function UpdateProductPage() {
         value={stock}
         onChange={(e) => setStock(Number(e.target.value))}
       />
-       <input
+      <input
         type="text"
         placeholder="Description"
         className={inputClass}

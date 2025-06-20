@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function AdminProductPage() {
   const [allProducts, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -87,8 +88,15 @@ export default function AdminProductPage() {
                   </td>
                   <td className="border border-gray-300">
                     <div className="flex justify-center items-center w-full gap-2">
-                      <FaTrash className="text-red-600 text-[20px] mx-2 cursor-pointer"/>
-                      <FaEdit className="text-blue-600 text-[20px] mx-2 cursor-pointer" />
+                      <FaTrash className="text-red-600 text-[20px] mx-2 cursor-pointer" />
+                      <FaEdit
+                        onClick={() =>
+                          navigate(`/admin/edit-products/`, {
+                            state: product,
+                          })
+                        }
+                        className="text-blue-600 text-[20px] mx-2 cursor-pointer"
+                      />
                     </div>
                   </td>
                 </tr>

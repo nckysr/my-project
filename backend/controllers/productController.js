@@ -61,6 +61,7 @@ export async function deleteProduct(req, res) {
 }
 
 export async function updateProduct(req, res) {
+	console.log(req.body);
 	if (!isAdmin(req)) {
 		res.status(403).json({ message: "Access denied. Admins only." });
 		return;

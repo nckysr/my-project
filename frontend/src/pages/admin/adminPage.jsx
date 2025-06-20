@@ -21,7 +21,7 @@ export default function AdminPage() {
           <Route path="/users" element={<AdminUserPage />} />
           <Route path="/products" element={<AdminProductPage />} />
           <Route path="/add-products" element={<AddProductPage />} />          
-          <Route path="/edit-products" element={<UpdateProductPage />} />
+          <Route path="/edit-products" element={<EditProductPage />} />
           <Route path="/orders" element={<h1>Orders</h1>} />
           <Route path="/reviews" element={<h1>Reviews</h1>} />
         </Routes>
