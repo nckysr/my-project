@@ -87,6 +87,7 @@ export async function updateProduct(req, res) {
 }
 
 export async function getProductInfo(req, res) {
+  console.log(req.body);
   try {
     const productId = req.params.productId;
     const product = await Product.findOne({ productId: productId });
