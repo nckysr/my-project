@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 export default function ProductPage() {
   const [allProducts, setProducts] = useState([]);
@@ -36,15 +37,17 @@ export default function ProductPage() {
       .delete(import.meta.env.VITE_BACKEND_URL + `/api/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        }
+        },
       })
-      .then(() => {
+      .then((response) => {
         toast.success(response.data.message);
+        console.log("Product deleted successfully!");
 
         setLoading(true);
       })
       .catch((error) => {
-        console.error(response.data.message);
+        toast.error(error.data.message);
+        console.log("Failed to delete product. Please try again later.");
       });
   }
 
@@ -52,12 +55,14 @@ export default function ProductPage() {
     <div className="w-full h-full bg-gray-300 max-h-full overflow-y-scroll ">
       <Link
         to="/admin/add-products"
-        className="fixed bottom-4 right-4 bg-green-700 text-white font-bold px-4 py-2 rounded-md shadow-md hover:bg-blue-800 transition-colors"
+        className="fixed bottom-4 right-8 bg-green-700 text-white font-bold text-2xl text-center px-4 py-2 rounded-md shadow-md hover:bg-blue-800 transition-colors"
       >
-        + Add Products
+        +
       </Link>
       {loading ? (
-        <p className="text-center text-blue-600">Loading...</p>
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="w-[70px] h-[70px] border-[5px] rounded-full  border-blue-400  border-t-blue-700 animate-spin"></div>
+        </div>
       ) : error ? (
         <p className="text-center text-red-600">{error}</p>
       ) : (

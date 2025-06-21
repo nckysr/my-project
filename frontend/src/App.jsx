@@ -19,23 +19,13 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-center" />
         <div>
-          <div className="bg-blue-500  p-2 rounded-lg shadow-md hover:bg-red-200 transition duration-200">
-            <Link to="/">Home  </Link>
-            <Link to="/login">Login  </Link>
-            <Link to="/signup">Sign Up  </Link>
-            <Link to="/admin">Admin  </Link>
-            <Link to="/testing">Testing   </Link>
-            <Link to="/add-product">Product   </Link>
-            <Link to="/media">media  </Link>
-          </div>
           <Routes path="/*">
-            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SingUpPage />} />
             <Route path="/admin/*" element={<AdminPage />} />
             <Route path="/testing" element={<TestPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
-            <Route path="/*" element={<h1>404 Not Found</h1>} />
+            <Route path="/*" element={<HomePage />} />
           </Routes>
         </div>
       </BrowserRouter>

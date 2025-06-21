@@ -35,7 +35,9 @@ export default function AdminUserPage() {
   return (
     <div className="w-full h-screen bg-gray-300 max-h-full overflow-y-scroll p-4">
       {loading ? (
-        <p className="text-center text-blue-600">Loading...</p>
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="w-[70px] h-[70px] border-[5px] rounded-full  border-blue-400  border-t-blue-700 animate-spin"></div>
+        </div>
       ) : error ? (
         <p className="text-center text-red-600">{error}</p>
       ) : (
@@ -77,7 +79,8 @@ export default function AdminUserPage() {
                   </td>
                   <td className="border border-gray-300">
                     <img
-                      src={user.image}
+
+                      src={user.image }
                       alt="User"
                       className="w-[50px] h-[50px] object-cover rounded-full mx-auto"
                     />
