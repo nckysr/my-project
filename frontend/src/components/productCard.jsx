@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export function ProductCard(props) {
   const renderStars = (rating) => {
@@ -36,9 +37,9 @@ export function ProductCard(props) {
   };
 
   return (
-    <div className="w-[300px] h-[500px] bg-gray-200  shadow-lg border border-gray-300 rounded-xl overflow-hidden flex flex-col justify-between hover:scale-105 transition-transform duration-300">
+    <Link to={"/overview/"+props.productId}className="w-[300px] h-[500px] bg-gray-200  shadow-lg border border-gray-300 rounded-xl overflow-hidden flex flex-col justify-between hover:scale-105 transition-transform duration-300">
       {/* Image */}
-      <div className="h-[200px] w-full bg-gray-100 flex items-center justify-center">
+      <div className="h-[200px] w-full bg-gray-100  flex items-center justify-center">
         {props.images && props.images.length > 0 ? (
           <img
             src={props.images[0]}
@@ -111,6 +112,6 @@ export function ProductCard(props) {
 
         <p className="text-lg font-bold text-green-700">${props.price}</p>
       </div>
-    </div>
+    </Link>
   );
 }
