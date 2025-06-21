@@ -13,10 +13,18 @@ export default function Header() {
         }}
       />
       <div className="w-[calc(100%-160px)] h-full font-bold text-[20px]  bg-amber-800 flex justify-center items-center">
-        <Link to="/" className="mx-2">Home </Link>
-        <Link to="/contact"  className="mx-2">Contact </Link>
-        <Link to="/all-products"  className="mx-2">Product </Link>
-        <Link to="/about"  className="mx-2">About </Link>
+        <Link to="/" className="mx-2">
+          Home{" "}
+        </Link>
+        <Link to="/all-products" className="mx-2">
+          Product{" "}
+        </Link>
+        <Link to="/contact" className="mx-2">
+          Contact{" "}
+        </Link>
+        <Link to="/about" className="mx-2">
+          About{" "}
+        </Link>
       </div>
       <div className="w-[80px]  bg-red-600"></div>
     </header>
