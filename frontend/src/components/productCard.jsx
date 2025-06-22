@@ -11,25 +11,19 @@ export function ProductCard(props) {
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`full-${i}`} className="text-yellow-500 text-lg">
-          ★
-        </span>
+        <span key={`full-${i}`} className="text-yellow-400 text-sm">★</span>
       );
     }
 
     if (halfStar) {
       stars.push(
-        <span key="half" className="text-yellow-400 text-lg">
-          ☆
-        </span>
+        <span key="half" className="text-yellow-300 text-sm">☆</span>
       );
     }
 
     while (stars.length < totalStars) {
       stars.push(
-        <span key={`empty-${stars.length}`} className="text-gray-400 text-lg">
-          ☆
-        </span>
+        <span key={`empty-${stars.length}`} className="text-gray-300 text-sm">☆</span>
       );
     }
 
@@ -37,80 +31,78 @@ export function ProductCard(props) {
   };
 
   return (
-    <Link to={"/overview/"+props.productId}className="w-[300px] h-[500px] bg-gray-200  shadow-lg border border-gray-300 rounded-xl overflow-hidden flex flex-col justify-between hover:scale-105 transition-transform duration-300">
+    <Link
+      to={`/overview/${props.productId}`}
+      className="w-full max-w-xs bg-white rounded-2xl shadow-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl flex flex-col"
+    >
       {/* Image */}
-      <div className="h-[200px] w-full bg-gray-100  flex items-center justify-center">
-        {props.images && props.images.length > 0 ? (
+      <div className="h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+        {props.images?.length > 0 ? (
           <img
             src={props.images[0]}
             alt={props.name}
-            className="h-full w-full object-cover"
+            className="w-full h-full object-cover"
           />
         ) : (
-          <span className="text-gray-400">No Image</span>
+          <span className="text-gray-400 text-sm">No Image Available</span>
         )}
       </div>
 
-      {/* Product Info */}
-      <div className="flex-1 p-4 flex flex-col justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-gray-800">{props.name}</h2>{" "}
+      {/* Content */}
+      <div className="p-4 flex flex-col justify-between flex-1">
+        <div className="mb-2">
+          <h3 className="text-lg font-semibold text-gray-900 truncate">{props.name}</h3>
           <p className="text-sm text-gray-500 truncate">{props.altNames}</p>
-          <p className="text-sm text-gray-500 mt-1 h-[48px] overflow-hidden">
-            {props.description}
-          </p>
         </div>
 
-        {/* Pricing */}
-        <div className="mt-3">
+        <p className="text-sm text-gray-600 h-12 overflow-hidden mb-2">
+          {props.description}
+        </p>
+
+        {/* Price */}
+        <div className="flex items-center justify-between mb-2">
           {props.labelledPrice !== props.price ? (
-            <div className="flex items-center gap-2">
-              <p className="text-red-500 font-bold text-lg">
+            <>
+              <span className="text-lg font-bold text-blue-600">
                 Rs. {props.price.toLocaleString()}
-              </p>
-              <p className="text-gray-400 line-through text-sm">
+              </span>
+              <span className="text-sm text-gray-400 line-through">
                 Rs. {props.labelledPrice.toLocaleString()}
-              </p>
-            </div>
+              </span>
+            </>
           ) : (
-            <p className="text-gray-700 font-semibold text-lg">
+            <span className="text-lg font-bold text-blue-600">
               Rs. {props.price.toLocaleString()}
-            </p>
+            </span>
           )}
         </div>
-        <div className="flex items-center gap-1">
+
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-2">
           {renderStars(props.rating)}
-          <span className="ml-2 text-sm text-gray-600">({props.rating})</span>
+          <span className="text-sm text-gray-600">({props.rating})</span>
         </div>
 
-        {/* Stock & Button */}
-        <div className="mt-4 flex items-center justify-between">
-          <span
-            className={`text-sm font-medium ${
-              props.isAvailable && props.stock > 0
-                ? "text-green-600"
-                : "text-red-500"
-            }`}
-          >
-            {props.isAvailable && props.stock > 0 ? "In Stock" : "Out of Stock"}
-          </span>
-        </div>
-        <div className="p-4 flex justify-between gap-2">
-          <button className="w-1/2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+        {/* Stock Info */}
+        <span
+          className={`text-sm font-medium ${
+            props.isAvailable && props.stock > 0
+              ? "text-green-600"
+              : "text-red-500"
+          }`}
+        >
+          {props.isAvailable && props.stock > 0 ? "In Stock" : "Out of Stock"}
+        </span>
+
+        {/* Actions */}
+        <div className="mt-4 flex gap-2">
+          <button className="flex-1 bg-blue-600 text-white py-2 text-sm rounded-xl hover:bg-blue-700 transition">
             Buy Now
           </button>
-          <button className="w-1/2 bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600 transition">
+          <button className="flex-1 bg-yellow-500 text-white py-2 text-sm rounded-xl hover:bg-yellow-600 transition">
             Add to Cart
           </button>
         </div>
-      </div>
-
-      <div className="p-4 flex flex-col gap-2">
-        <h2 className="text-xl font-semibold text-gray-800 truncate">
-          {props.name}
-        </h2>
-
-        <p className="text-lg font-bold text-green-700">${props.price}</p>
       </div>
     </Link>
   );

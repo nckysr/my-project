@@ -12,7 +12,6 @@ export default function AdminPage() {
         <Link to="/admin/products">product</Link>
         <Link to="/admin/orders">order</Link>
         <Link to="/admin/reviews">review</Link>
-        <Link to="/admin/edit-products">Edit</Link>
       </div>
 
       <div className="h-full w-[calc(100%-200px)]">

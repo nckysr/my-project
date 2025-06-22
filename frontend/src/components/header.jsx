@@ -14,16 +14,19 @@ export default function Header() {
       />
       <div className="w-[calc(100%-160px)] h-full font-bold text-[20px]  bg-amber-800 flex justify-center items-center">
         <Link to="/" className="mx-2">
-          Home{" "}
+          Home
         </Link>
         <Link to="/all-products" className="mx-2">
-          Product{" "}
+          Product
         </Link>
         <Link to="/contact" className="mx-2">
-          Contact{" "}
+          Contact
         </Link>
         <Link to="/about" className="mx-2">
-          About{" "}
+          About
+        </Link>
+        <Link to="/admin" className="mx-2">
+          Admin
         </Link>
       </div>
       <div className="w-[80px]  bg-red-600"></div>

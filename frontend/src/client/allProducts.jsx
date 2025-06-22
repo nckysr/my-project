@@ -22,7 +22,7 @@ export default function AllProducts() {
     }
   }, [loading]);
   return (
-    <div className="w-full h-full flex flex-wrap shadow-amber-600 justify-center items-center gap-1 ">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       {products.map((product) => {
         return <ProductCard key={product._id} {...product}  />;
       })}
