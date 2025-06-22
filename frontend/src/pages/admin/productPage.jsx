@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
+import Loading from "../../components/loading";
 
 export default function ProductPage() {
   const [allProducts, setProducts] = useState([]);
@@ -60,9 +61,7 @@ export default function ProductPage() {
         +
       </Link>
       {loading ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="w-[70px] h-[70px] border-[5px] rounded-full  border-blue-400  border-t-blue-700 animate-spin"></div>
-        </div>
+       <Loading/>
       ) : error ? (
         <p className="text-center text-red-600">{error}</p>
       ) : (
