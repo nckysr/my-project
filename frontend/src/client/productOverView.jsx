@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../components/imageSlider";
 import Loading from "../components/loading";
+import { addToCart, getCart } from "../utils/cart";
 
 export default function ProductOverView() {
   const { id: productId } = useParams();
@@ -80,7 +81,14 @@ export default function ProductOverView() {
             <button className="w-1/2 bg-blue-700 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg transition duration-200">
               Buy Now
             </button>
-            <button className="w-1/2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold py-2 rounded-lg transition duration-200">
+            <button
+              onClick={() => {
+                addToCart(product, 1);
+                toast.success("Added to cart!");
+                console.log("Product added to cart:", getCart() );
+              }}
+              className="w-1/2 bg-yellow-500 hover:bg-yellow-400 text-white font-semibold py-2 rounded-lg transition duration-200"
+            >
               Add to Cart
             </button>
           </div>

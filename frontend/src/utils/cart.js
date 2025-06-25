@@ -20,7 +20,7 @@ export function removeFromCart(productId) {
 export function addToCart(product, qty) {
   let cart = getCart();
   let index = cart.findIndex((item) => {
-    return item.productId == productproductId;
+    return item.productId == product.productId;
   });
   if (index == -1) {
     cart[cart.length] = {
@@ -28,7 +28,7 @@ export function addToCart(product, qty) {
       name: product.name,
       price: product.price,
       labelledPrice: product.labelledPrice,
-      images: product.images[0],
+      image: product.images[0],
       qty: qty,
     };
   } else {
