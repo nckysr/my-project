@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../../components/loading";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function AdminUserPage() {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const Navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
     console.log("Token:", token);
@@ -36,7 +39,7 @@ export default function AdminUserPage() {
   return (
     <div className="w-full h-screen bg-gray-300 max-h-full overflow-y-scroll p-4">
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : error ? (
         <p className="text-center text-red-600">{error}</p>
       ) : (
@@ -51,6 +54,8 @@ export default function AdminUserPage() {
               <th className="border border-gray-400">Blocked</th>
               <th className="border border-gray-400">Verified</th>
               <th className="border border-gray-400">Image</th>
+
+              <th className="border border-gray-400">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -61,31 +66,45 @@ export default function AdminUserPage() {
                 </td>
               </tr>
             ) : (
-              allUsers.map((user, index) => (
-                <tr key={user._id} className="bg-white hover:bg-gray-100">
-                  <td className="border border-gray-300">{index + 1}</td>
-                  <td className="border border-gray-300">
-                    {user.firstName} {user.lastName}
-                  </td>
-                  <td className="border border-gray-300">{user.email}</td>
-                  <td className="border border-gray-300">{user.phone}</td>
-                  <td className="border border-gray-300">{user.role}</td>
-                  <td className="border border-gray-300">
-                    {user.isBlocked ? "Yes" : "No"}
-                  </td>
-                  <td className="border border-gray-300">
-                    {user.isEmailVerified ? "Yes" : "No"}
-                  </td>
-                  <td className="border border-gray-300">
-                    <img
-
-                      src={user.image }
-                      alt="User"
-                      className="w-[50px] h-[50px] object-cover rounded-full mx-auto"
-                    />
-                  </td>
-                </tr>
-              ))
+              allUsers.map(
+                (user, index) => (
+                  console.log(user.image),
+                  (
+                    <tr key={user._id} className="bg-white hover:bg-gray-100">
+                      <td className="border border-gray-300">{index + 1}</td>
+                      <td className="border border-gray-300">
+                        {user.firstName} {user.lastName}
+                      </td>
+                      <td className="border border-gray-300">{user.email}</td>
+                      <td className="border border-gray-300">{user.phone}</td>
+                      <td className="border border-gray-300">{user.role}</td>
+                      <td className="border border-gray-300">
+                        {user.isBlocked ? "Yes" : "No"}
+                      </td>
+                      <td className="border border-gray-300">
+                        {user.isEmailVerified ? "Yes" : "No"}
+                      </td>
+                      <td className="border border-gray-300">
+                        <img
+                          src={user.image}
+                          alt="User"
+                          className="w-[50px] h-[50px] object-cover rounded-full mx-auto"
+                        />
+                      </td>
+                      <td className="border border-gray-300">
+                        <div className="flex justify-center items-center w-full gap-2">
+                          <FaEdit
+                            onClick={() =>
+                              Navigate(`/admin/edit-user/`, { state: user })
+                            }
+                            className="text-blue-600 text-[20px] mx-2 cursor-pointer"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                )
+              )
             )}
           </tbody>
         </table>

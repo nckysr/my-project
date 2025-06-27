@@ -8,6 +8,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -50,7 +51,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-full h-screen bg-[url('/login.jpg')] backdrop-blur bg-cover bg-center flex items-center justify-center">
+    <div className="w-full h-screen bg-[url('/login.jpg')]  bg-cover bg-center flex items-center justify-center">
       <div className="w-[50%] h-full justify-center items-center"></div>
 
       <div className="w-[50%] h-full flex justify-center items-center">

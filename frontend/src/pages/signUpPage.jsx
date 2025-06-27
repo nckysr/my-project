@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import mediaUpload from "../utils/mediaUploadPage";
 
 export default function SignupPage() {
   const [firstName, setFirstName] = useState("");
@@ -16,15 +17,32 @@ export default function SignupPage() {
 
   async function handleSignup(e) {
     e.preventDefault();
-    console.log("Submitting:", { firstName, lastName, email, password, phone });
+
+    console.log("Submitting:", {
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      image,
+    });
 
     if (!firstName || !lastName || !email || !password) {
       toast.error("Please fill in all required fields");
       return;
     }
 
+    if (!image) {
+      toast.error("Please select profile image");
+      return;
+    }
+
     setLoading(true);
     try {
+      // Upload image first
+      const imageUrl = await mediaUpload(image);
+      console.log("Image uploaded successfully:", imageUrl);
+
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/api/users/",
         {
@@ -33,11 +51,10 @@ export default function SignupPage() {
           email,
           password,
           phone,
-          image,
+          image: imageUrl,
         }
       );
 
-      ///toast.success("Signup successful!");
       toast.success(response.data.message);
       navigate("/login");
     } catch (error) {
@@ -77,7 +94,7 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
-              className=" bg-white mb-3 w-full px-3 py-2 border rounded"
+              className="bg-white mb-3 w-full px-3 py-2 border rounded"
               required
             />
             <input
@@ -96,10 +113,9 @@ export default function SignupPage() {
               className="bg-white mb-4 w-full px-3 py-2 border rounded"
             />
             <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="Image URL"
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
               className="bg-white mb-4 w-full px-3 py-2 border rounded"
             />
             <button

@@ -3,10 +3,10 @@
 @import "tailwindcss";
 
 
-@theme{
-    --color-primary:#FBFBFB;
-    --color-secondary:#393E46;
-    --color-accent:#483AA0;
+:root {
+    --color-primary: #FBFBFB;
+    --color-secondary: #393E46;
+    --color-accent: #483AA0;
     --font-fancy: 'Exile', sans-serif;
-    --font-main: 'Playwrite HU' , sans-serif;
+    --font-main: 'Playwrite HU', sans-serif;
 }

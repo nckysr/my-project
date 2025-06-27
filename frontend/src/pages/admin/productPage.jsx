@@ -88,6 +88,7 @@ export default function ProductPage() {
               </tr>
             ) : (
               allProducts.map((product, index) => (
+                console.log(product.images),
                 <tr
                   key={product.productId}
                   className="bg-white hover:bg-gray-100"
